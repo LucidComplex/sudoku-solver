@@ -14,8 +14,8 @@ public class SudokuSolver {
     private int populationSize;
     private int maxGenerations;
     private Recombinator recombinator;
-    private Selector parentSelector;
-    private Selector survivorSelector;
+    private ParentSelector parentSelector;
+    private SurvivorSelector survivorSelector;
     private float recombinationProb;
     private float mutationProb;
     private float survivalRate;
@@ -44,6 +44,7 @@ public class SudokuSolver {
         }
         int individualSize = getIndividualSize(sudoku);
         initializePopulation(sudoku.length(), individualSize);
+        calculateFitness(population);
     }
 
     private void initializePopulation(int puzzleSize, int individualSize) {

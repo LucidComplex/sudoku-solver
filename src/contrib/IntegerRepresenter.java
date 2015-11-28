@@ -1,7 +1,6 @@
 package contrib;
 
 import base.Representer;
-import base.SudokuBlock;
 
 import java.util.Random;
 
