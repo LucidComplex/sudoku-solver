@@ -6,4 +6,9 @@ package base;
 public class Individual {
     String genotype;
     int fitness;
+
+    public Individual(String in) {
+        genotype = in;
+        fitness = -1;
+    }
 }

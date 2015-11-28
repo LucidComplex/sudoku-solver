@@ -8,7 +8,7 @@ import java.util.StringJoiner;
  * Created by tan on 11/29/15.
  */
 public class SudokuParser {
-    public static String parse(String fileName) throws IOException {
+    public static Sudoku parse(String fileName) throws IOException {
         InputStreamReader in = new InputStreamReader(new FileInputStream(fileName));
         BufferedReader reader = new BufferedReader(in);
         String line;
@@ -23,6 +23,7 @@ public class SudokuParser {
             line = line.replaceAll(" ", "");
             sb.append(line);
         }
-        return sb.toString();
+        Sudoku sudoku = new Sudoku(sb.toString());
+        return sudoku;
     }
 }

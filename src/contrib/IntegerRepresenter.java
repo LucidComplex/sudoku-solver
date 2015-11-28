@@ -1,5 +1,6 @@
 package contrib;
 
+import base.Individual;
 import base.Representer;
 
 import java.util.Random;
@@ -10,17 +11,12 @@ import java.util.Random;
 public class IntegerRepresenter extends Representer {
 
     @Override
-    public String represent(String allele) {
-        return null;
-    }
-
-    @Override
-    public String randomIndividual(int puzzleSize, int size) {
+    public Individual randomIndividual(int puzzleSize, int size) {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < size; i++) {
             sb.append(Math.abs(random.nextInt()) % puzzleSize + 1);
         }
-        return sb.toString();
+        return new Individual(sb.toString());
     }
 }

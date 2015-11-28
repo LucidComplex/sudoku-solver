@@ -19,7 +19,7 @@ public class SudokuSolver {
     private float recombinationProb;
     private float mutationProb;
     private float survivalRate;
-    private List<String> population;
+    private List<Individual> population;
 
     public SudokuSolver() {
         population = new LinkedList<>();
@@ -27,7 +27,7 @@ public class SudokuSolver {
         representer = new IntegerRepresenter();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if(args.length < 1) {
             System.err.println("Missing filename.\nUsage:\n\tjava SudokuSolver <puzzle>");
         }
@@ -35,15 +35,11 @@ public class SudokuSolver {
         solver.solve(args[0]);
     }
 
-    public void solve(String fileName) {
-        String sudoku = "";
-        try {
-            sudoku = SudokuParser.parse(fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void solve(String fileName) throws IOException {
+        Sudoku sudoku;
+        sudoku = SudokuParser.parse(fileName);
         int individualSize = getIndividualSize(sudoku);
-        initializePopulation(sudoku.length(), individualSize);
+        initializePopulation(sudoku.genotype.length(), individualSize);
         calculateFitness(population);
     }
 
@@ -53,13 +49,17 @@ public class SudokuSolver {
         }
     }
 
-    private int getIndividualSize(String sudoku) {
+    private int getIndividualSize(Sudoku sudoku) {
         int size = 0;
-        for (int i = 0; i < sudoku.length(); i++) {
-            if (sudoku.charAt(i) == '0') {
+        for (int i = 0; i < sudoku.genotype.length(); i++) {
+            if (sudoku.genotype.charAt(i) == '0') {
                 size++;
             }
         }
         return size;
+    }
+
+    private void calculateFitness(List<Individual> list)  {
+
     }
 }
