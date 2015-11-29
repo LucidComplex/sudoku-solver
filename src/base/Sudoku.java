@@ -8,25 +8,39 @@ import java.util.Vector;
  */
 public class Sudoku {
     String genotype;
+    int size;
 
-    public Sudoku(String in) {
+    public Sudoku(String in, int size) {
         genotype = in;
+        this.size = size;
     }
 
     public int calculateFitness(Individual individual) {
-        int individualLength = individual.genotype.length();
-        int rowLength;
-        if (individualLength < 9) {
-            rowLength = individualLength / 2;
-        } else {
-            rowLength = individualLength / 3;
+        String genotypeCopy = genotype;
+        for (int i = 0; i < individual.genotype.length(); i++) {
+            genotypeCopy = genotypeCopy.replaceFirst("0", individual.genotype.substring(i, i + 1));
         }
+
         int score = 0;
-        score += duplicatesCount(individual.genotype);
-        for (int start = 0, end = rowLength; end <= individualLength; start += rowLength, end += rowLength) {
-            score += duplicatesCount(individual.genotype.substring(start, end));
+
+        // horizontal
+        for (int i = 0; i < genotypeCopy.length(); i += size) {
+            score += duplicatesCount(genotypeCopy.substring(i, i + size));
+        }
+        for (int i = 0; i < size; i ++) {
+            // construct new string of vertical component
+            String vert = getColumn(genotypeCopy, i);
+            score += duplicatesCount(vert);
         }
         return score;
+    }
+
+    private String getColumn(String string, int index) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            builder.append(string.charAt(index + i * size));
+        }
+        return builder.toString();
     }
 
     private int duplicatesCount(String string) {

@@ -39,8 +39,8 @@ public class SudokuSolver {
         Sudoku sudoku;
         sudoku = SudokuParser.parse(fileName);
         int individualSize = getIndividualSize(sudoku);
-        initializePopulation(sudoku.genotype.length(), individualSize);
-        calculateFitness(population);
+        initializePopulation(sudoku.size, individualSize);
+        calculateFitness(sudoku, population);
     }
 
     private void initializePopulation(int puzzleSize, int individualSize) {
@@ -59,7 +59,14 @@ public class SudokuSolver {
         return size;
     }
 
-    private void calculateFitness(List<Individual> list)  {
-
+    /*
+    Given a sudoku and a list of individuals, calculate their fitnesses
+     */
+    private void calculateFitness(Sudoku sudoku, List<Individual> list)  {
+        for (Individual ind : list) {
+            System.out.println(ind.genotype);
+            ind.fitness = sudoku.calculateFitness(ind);
+            System.out.println(ind.fitness);
+        }
     }
 }

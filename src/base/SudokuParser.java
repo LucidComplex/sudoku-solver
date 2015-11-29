@@ -23,7 +23,7 @@ public class SudokuParser {
             line = line.replaceAll(" ", "");
             sb.append(line);
         }
-        Sudoku sudoku = new Sudoku(sb.toString());
+        Sudoku sudoku = new Sudoku(sb.toString(), size);
         return sudoku;
     }
 }
