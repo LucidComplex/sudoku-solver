@@ -1,8 +1,10 @@
 package base;
 
+import contrib.EliteSelector;
 import contrib.IntegerRepresenter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class SudokuSolver {
         population = new LinkedList<>();
         populationSize = 30;
         survivalRate = 0.7f;
+        survivorSelector = new EliteSelector();
         representer = new IntegerRepresenter();
     }
 
@@ -44,7 +47,21 @@ public class SudokuSolver {
         initializePopulation(sudoku.size, individualSize);
         calculateFitness(sudoku, population);
         Collection<Individual> survivors = survivorSelector.selectSurvivors(population, survivalRate);
-        Collection<Individual> parents = parentSelector.selectParents(population);
+        Collection<Individual> parents = generateParents(population);
+        Collection<Individual> children = generateChildren(parents);
+    }
+
+    private Collection<Individual> generateChildren(Collection<Individual> parents) {
+        return null;
+    }
+
+    private Collection<Individual> generateParents(Collection<Individual> population) {
+        int pairsToGenerate = populationSize - Math.round(survivalRate * populationSize);
+        Collection<Individual> parents = new ArrayList<>();
+        for (int i = 0; i < pairsToGenerate; i++) {
+            parents.addAll(parentSelector.selectParents(population));
+        }
+        return parents;
     }
 
     private void initializePopulation(int puzzleSize, int individualSize) {

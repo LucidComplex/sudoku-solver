@@ -26,9 +26,11 @@ public class EliteSelector implements SurvivorSelector{
                 }
             }
         });
-        System.out.println(populationList.get(0).getFitness());
         Collections.reverse(populationList);
-        System.out.println(populationList.get(0).getFitness());
-        return null;
+        // take elites
+        int individualsToTake = Math.round(survivalRate * population.size());
+        populationList = populationList.subList(0, individualsToTake);
+        System.out.println(populationList.size());
+        return populationList;
     }
 }
