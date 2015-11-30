@@ -3,6 +3,7 @@ package base;
 import contrib.IntegerRepresenter;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,11 +20,12 @@ public class SudokuSolver {
     private float recombinationProb;
     private float mutationProb;
     private float survivalRate;
-    private List<Individual> population;
+    private Collection<Individual> population;
 
     public SudokuSolver() {
         population = new LinkedList<>();
         populationSize = 30;
+        survivalRate = 0.7f;
         representer = new IntegerRepresenter();
     }
 
@@ -41,6 +43,8 @@ public class SudokuSolver {
         int individualSize = getIndividualSize(sudoku);
         initializePopulation(sudoku.size, individualSize);
         calculateFitness(sudoku, population);
+        Collection<Individual> survivors = survivorSelector.selectSurvivors(population, survivalRate);
+        Collection<Individual> parents = parentSelector.selectParents(population);
     }
 
     private void initializePopulation(int puzzleSize, int individualSize) {
@@ -62,11 +66,9 @@ public class SudokuSolver {
     /*
     Given a sudoku and a list of individuals, calculate their fitnesses
      */
-    private void calculateFitness(Sudoku sudoku, List<Individual> list)  {
+    private void calculateFitness(Sudoku sudoku, Collection<Individual> list)  {
         for (Individual ind : list) {
-            System.out.println(ind.genotype);
             ind.fitness = sudoku.calculateFitness(ind);
-            System.out.println(ind.fitness);
         }
     }
 }

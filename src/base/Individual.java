@@ -14,4 +14,8 @@ public class Individual {
         genotype = in;
         fitness = -1;
     }
+
+    public int getFitness() {
+        return fitness;
+    }
 }
