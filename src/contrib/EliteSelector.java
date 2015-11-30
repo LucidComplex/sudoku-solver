@@ -13,7 +13,6 @@ public class EliteSelector implements SurvivorSelector{
 
     @Override
     public List<Individual> selectSurvivors(List<Individual> population, float survivalRate) {
-        int selectionSize = Math.round(population.size() * survivalRate);
         Collections.sort(population, new FitnessComparator());
         // take elites
         int individualsToTake = Math.round(survivalRate * population.size());

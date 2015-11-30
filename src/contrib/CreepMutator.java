@@ -20,8 +20,9 @@ public class CreepMutator implements Mutator {
                 char newChar = builder.charAt(i);
                 if (newChar == '0' + puzzleSize) {
                     newChar = '1';
+                } else {
+                    newChar += 1;
                 }
-                newChar += 1;
                 builder.setCharAt(i, newChar);
             }
         }

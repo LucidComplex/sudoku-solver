@@ -20,7 +20,6 @@ public class IntegerRepresenter extends Representer {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < size; i++) {
             int rand = Math.abs(random.nextInt()) % puzzleSize + 1;
-            System.out.println(rand);
             sb.append(rand);
         }
         return new Individual(sb.toString());

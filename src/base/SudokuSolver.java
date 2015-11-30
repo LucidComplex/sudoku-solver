@@ -25,12 +25,12 @@ public class SudokuSolver {
     public SudokuSolver() {
         population = new ArrayList<>();
         populationSize = 10;
-        survivalRate = 0.1f;
-        survivorSelector = new RankedBasedSelector();
+        survivalRate = 0.2f;
+        survivorSelector = new EliteSelector();
         parentSelector = new TournamentSelector();
-        recombinator = new NPointCrossover();
+        recombinator = new OnePointCrossoverRecombinator();
         recombinationProb = 1f;
-        mutationProb = 1f;
+        mutationProb = 0.01f;
         mutator = new ResetMutator();
         representer = new IntegerRepresenter();
     }
@@ -60,6 +60,9 @@ public class SudokuSolver {
                 }
             }
             List<Individual> survivors = survivorSelector.selectSurvivors(population, survivalRate);
+            for (Individual i : survivors) {
+                System.out.println(i.getGenotype());
+            }
             List<Individual> parents = generateParents(population);
             List<Individual> children = generateChildren(parents);
             population = new ArrayList<>();
@@ -67,7 +70,8 @@ public class SudokuSolver {
             population.addAll(children);
             mutatePopulation(population, sudoku.size);
             calculateFitness(sudoku, population);
-            System.out.println(overallFitness(population));
+            float averageFitness = overallFitness(population) / (0f + population.size());
+            System.out.println("Average fitness: " + averageFitness);
         }
     }
 
@@ -98,7 +102,7 @@ public class SudokuSolver {
             }
         }
         if (childrenToGenerate % 2 == 1) {
-            children.remove(childrenToGenerate - 2);
+            children.remove(0);
         }
         return children;
     }
