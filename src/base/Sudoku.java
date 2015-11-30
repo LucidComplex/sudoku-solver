@@ -1,6 +1,5 @@
 package base;
 
-import java.util.Collection;
 import java.util.Vector;
 
 /**
@@ -27,7 +26,7 @@ public class Sudoku {
         for (int i = 0; i < genotypeCopy.length(); i += size) {
             score += duplicatesCount(genotypeCopy.substring(i, i + size));
         }
-        for (int i = 0; i < size; i ++) {
+        for (int i = 0; i < size; i++) {
             // construct new string of vertical component
             String vert = getColumn(genotypeCopy, i);
             score += duplicatesCount(vert);

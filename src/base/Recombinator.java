@@ -1,7 +1,10 @@
 package base;
 
+import java.util.List;
+
 /**
  * Created by tan on 11/29/15.
  */
-public abstract class Recombinator {
+public interface Recombinator {
+    public List<Individual> recombine(List<Individual> parents);
 }

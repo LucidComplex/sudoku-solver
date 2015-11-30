@@ -1,5 +1,6 @@
 package contrib;
 
+import base.FitnessComparator;
 import base.Individual;
 import base.SurvivorSelector;
 
@@ -11,26 +12,11 @@ import java.util.*;
 public class EliteSelector implements SurvivorSelector{
 
     @Override
-    public Collection<Individual> selectSurvivors(Collection<Individual> population, float survivalRate) {
+    public List<Individual> selectSurvivors(List<Individual> population, float survivalRate) {
         int selectionSize = Math.round(population.size() * survivalRate);
-        List<Individual> populationList = new ArrayList<>(population);
-        Collections.sort(populationList, new Comparator<Individual>() {
-            @Override
-            public int compare(Individual o1, Individual o2) {
-                if (o1.getFitness() > o2.getFitness()) {
-                    return -1;
-                } else if (o1.getFitness() < o2.getFitness()) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-        Collections.reverse(populationList);
+        Collections.sort(population, new FitnessComparator());
         // take elites
         int individualsToTake = Math.round(survivalRate * population.size());
-        populationList = populationList.subList(0, individualsToTake);
-        System.out.println(populationList.size());
-        return populationList;
+        return new ArrayList<>(population.subList(0, individualsToTake));
     }
 }

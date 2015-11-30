@@ -1,8 +1,5 @@
 package base;
 
-import java.util.Collection;
-import java.util.Vector;
-
 /**
  * Created by tan on 11/29/15.
  */
@@ -17,5 +14,17 @@ public class Individual {
 
     public int getFitness() {
         return fitness;
+    }
+
+    public String getGenotype() {
+        return genotype;
+    }
+
+    public void setGenotype(String genotype) {
+        this.genotype = genotype;
+    }
+
+    public void setFitness(int fitness) {
+        this.fitness = fitness;
     }
 }
