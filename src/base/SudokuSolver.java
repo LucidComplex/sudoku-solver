@@ -5,8 +5,6 @@ import contrib.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.LinkedList;
-import java.util.Random;
 
 /**
  * Created by tan on 11/28/15.
@@ -27,12 +25,12 @@ public class SudokuSolver {
     public SudokuSolver() {
         population = new ArrayList<>();
         populationSize = 10;
-        survivalRate = 0.7f;
-        survivorSelector = new EliteSelector();
+        survivalRate = 0.1f;
+        survivorSelector = new RankedBasedSelector();
         parentSelector = new TournamentSelector();
-        recombinator = new PartiallyMappedRecombinator();
-        recombinationProb = 0.9f;
-        mutationProb = 0.1f;
+        recombinator = new NPointCrossover();
+        recombinationProb = 1f;
+        mutationProb = 1f;
         mutator = new ResetMutator();
         representer = new IntegerRepresenter();
     }
@@ -92,7 +90,7 @@ public class SudokuSolver {
     private List<Individual> generateChildren(List<Individual> parents) {
         int childrenToGenerate = Math.round((1 - survivalRate) * populationSize);
         List<Individual> children = new ArrayList<>();
-        for (int i = 0; i <= childrenToGenerate / 2; i++) {
+        for (int i = 0; i < childrenToGenerate / 2; i++) {
             if (recombinationProb >= Math.random()) {
                 children.addAll(recombinator.recombine(new ArrayList<>(parents.subList(i * 2, i * 2 + 2))));
             } else {
@@ -100,7 +98,7 @@ public class SudokuSolver {
             }
         }
         if (childrenToGenerate % 2 == 1) {
-            children.remove(childrenToGenerate);
+            children.remove(childrenToGenerate - 2);
         }
         return children;
     }
