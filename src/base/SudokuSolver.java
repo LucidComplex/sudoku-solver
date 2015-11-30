@@ -30,10 +30,10 @@ public class SudokuSolver {
         survivalRate = 0.7f;
         survivorSelector = new EliteSelector();
         parentSelector = new TournamentSelector();
-        recombinator = new OnePointCrossoverRecombinator();
-        recombinationProb = 0.7f;
-        mutationProb = 0.15f;
-        mutator = new CreepMutator();
+        recombinator = new PartiallyMappedRecombinator();
+        recombinationProb = 0.9f;
+        mutationProb = 0.1f;
+        mutator = new ResetMutator();
         representer = new IntegerRepresenter();
     }
 
@@ -52,7 +52,7 @@ public class SudokuSolver {
         initializePopulation(sudoku.size, individualSize);
         int iterations = 0;
         while (true) {
-            iterations++;
+            System.out.println("Iteration " + ++iterations);
             calculateFitness(sudoku, population);
             for (Individual ind : population) {
                 if (ind.fitness == 0) {
