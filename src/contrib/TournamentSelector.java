@@ -12,7 +12,11 @@ import java.util.List;
  * Created by tan on 11/30/15.
  */
 public class TournamentSelector implements ParentSelector {
+    Random rand;
 
+    public TournamentSelector(Random random) {
+        rand = random;
+    }
     @Override
     public List<Individual> selectParents(List<Individual> population) {
         List<Individual> parents = new ArrayList<>();
@@ -31,10 +35,9 @@ public class TournamentSelector implements ParentSelector {
     private List<Individual> selectParticipants(List<Individual> population) {
         int k = 3;
         List<Individual> selected = new ArrayList<>();
-        Random rand = new Random(System.currentTimeMillis());
         int randIndex;
         for (int i = 0; i < k; i++) {
-            randIndex = Math.abs(rand.nextInt()) % population.size();
+            randIndex = rand.nextInt(population.size());
             selected.add(population.get(randIndex));
         }
         return selected;

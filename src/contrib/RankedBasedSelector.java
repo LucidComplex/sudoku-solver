@@ -37,6 +37,12 @@ public class RankedBasedSelector implements SurvivorSelector {
             selected.add(map(rand));
         }
 
+        float x = 0;
+        for (Map.Entry<Float, Float> entry : probabilityMap.entrySet()) {
+            x += entry.getKey();
+            System.out.println(entry.getKey());
+        }
+        System.out.println(x);
         return selected;
     }
 
@@ -47,7 +53,7 @@ public class RankedBasedSelector implements SurvivorSelector {
                 List<Individual> list = rankMap.get(entry.getValue());
                 return list.get((int) ((Math.random() * 100) % list.size()));
             }
-            x += entry.getKey();
+            x = entry.getKey();
         }
         return rankMap.values().iterator().next().get(0);
     }
@@ -85,7 +91,10 @@ public class RankedBasedSelector implements SurvivorSelector {
 
     private void mapProbabilities(int mu) {
         float s = 1.5f;
+        System.out.println(mu);
         for (Float i : rankMap.keySet()) {
+            System.out.println(i + " : " + rankMap.get(i).size());
+
             float prob = (2 - s) / mu;
             prob += ((2 * i) * (s - 1)) / (mu * (mu - 1));
             probabilityMap.put(prob, i);

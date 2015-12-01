@@ -14,13 +14,14 @@ import java.util.Random;
 public class OnePointCrossoverRecombinator implements Recombinator {
     Random rand;
 
-    public OnePointCrossoverRecombinator() {
-        rand = new Random(System.currentTimeMillis());
+    public OnePointCrossoverRecombinator(Random random) {
+        rand = random;
     }
+
     @Override
     public List<Individual> recombine(List<Individual> parents) {
         List<Individual> newChildren = new ArrayList<>();
-        int crossOverPoint = Math.abs(rand.nextInt()) % parents.size();
+        int crossOverPoint = rand.nextInt(parents.get(0).getGenotype().length());
         String first = parents.get(0).getGenotype();
         String second = parents.get(1).getGenotype();
         String newFirst = first.substring(0, crossOverPoint) + second.substring(crossOverPoint);

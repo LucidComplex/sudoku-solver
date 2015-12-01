@@ -9,12 +9,17 @@ import java.util.*;
  * Created by tan on 11/30/15.
  */
 public class NPointCrossover implements Recombinator {
+    Random rand;
+
+    public NPointCrossover(Random random) {
+        rand = random;
+    }
     @Override
     public List<Individual> recombine(List<Individual> parents) {
         int[] points = new int[2];
-        Random random = new Random(System.currentTimeMillis());
-        points[0] = random.nextInt(parents.get(0).getGenotype().length() - 1);
-        points[1] = points[0] + random.nextInt(parents.get(0).getGenotype().length() - points[0]);
+        int geneSize = parents.get(0).getGenotype().length();
+        points[0] = rand.nextInt(geneSize - 1);
+        points[1] = points[0] + rand.nextInt(geneSize - points[0]);
         String parent1 = parents.get(0).getGenotype();
         String parent2 = parents.get(1).getGenotype();
         String mid1 = parent1.substring(points[0], points[1]);
